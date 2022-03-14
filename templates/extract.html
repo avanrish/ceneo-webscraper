@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ekstrakcja Opinii</title>
+    <link rel="stylesheet" href="/static/index.css" />
+    <script>
+      let running = false;
+
+      async function handleSubmit() {
+        if (running) return;
+        const id = document.querySelector("input").value;
+        const button = document.querySelector("button");
+
+        button.innerHTML = "<div class='lds-dual-ring'></div>";
+        running = true;
+
+        const res = await fetch(`/api/extract/${id}`);
+        if (res.status === 400 || res.status === 404) {
+          running = false;
+          button.innerText = "Wyślij";
+          document.querySelector("#error").innerText =
+            "Nie znaleziono takiego produktu.";
+        }
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector("form");
+        form.onsubmit = (e) => {
+          e.preventDefault();
+          handleSubmit();
+        };
+      });
+    </script>
+  </head>
+  <body>
+    <nav>
+      <ul class="menuItems">
+        <li>
+          <a href="/">Strona Główna</a>
+        </li>
+        <li>
+          <a href="#" class="active">Ekstrakcja Opinii</a>
+        </li>
+        <li>
+          <a href="/products">Lista Produktów</a>
+        </li>
+        <li><a href="/author">O Autorze</a></li>
+      </ul>
+    </nav>
+    <main class="extract">
+      <form>
+        <label for="product-id">ID Produktu</label>
+        <input
+          type="text"
+          id="product-id"
+          name="product-id"
+          placeholder="00000000"
+        />
+        <button>Wyślij</button>
+      </form>
+      <div id="error"></div>
+    </main>
+  </body>
+</html>
