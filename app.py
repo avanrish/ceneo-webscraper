@@ -31,14 +31,15 @@ def get_opinions(id):
             with open('products.json', 'w') as f:
                 products.append({"id": id, "title": res["title"]})
                 f.write(json.dumps(products))
+        with open(f'products/{id}.json', 'w') as item:
+            item.write(json.dumps(res["reviews"]))
+
         return redirect(f'/product/{id}')
     except BaseException as e:
         return make_response('Wrong ID', 400)
 
 
-# @app.errorhandler(404)
-# def not_found():
-#     return make_response(
-#         render_template("404.html"),
-#         404
-#      )
+@app.route('*')
+def catch_all():
+    url_for('static', filename='index.css')
+    return render_template('homepage.html')
