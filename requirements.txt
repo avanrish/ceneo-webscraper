@@ -1,3 +1,5 @@
 flask
 beautifulsoup4
 requests
+pandas
+openpyxl

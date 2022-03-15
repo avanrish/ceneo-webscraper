@@ -30,7 +30,7 @@ nav .menuItems {
   color: #8254ff;
 }
 
-.extract {
+main {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -38,18 +38,18 @@ nav .menuItems {
   margin-top: 25px;
 }
 
-.extract form {
+main form {
   display: flex;
   flex-direction: column;
   max-width: 350px;
   width: 100%;
 }
-.extract input {
+main input {
   margin-bottom: 10px;
   padding: 5px;
 }
 
-.extract button {
+main button {
   border-radius: 0;
   padding: 10px;
   border: 1px solid #8254ff;
@@ -60,6 +60,48 @@ nav .menuItems {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: 0.5s all;
+}
+
+main button:hover {
+  border: 1px solid #8f67fd;
+  background-color: #8f67fd;
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  width: 100%;
+  line-height: 1.5rem;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.product a {
+  font-size: 20px;
+  text-decoration: none;
+  color: #8254ff;
+  font-weight: 600;
+}
+
+.product .stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+}
+
+.product div:last-of-type {
+  display: flex;
+  justify-content: center;
+}
+
+.product button {
+  width: 72px;
+}
+
+.product div:last-of-type button:nth-child(2) {
+  margin: 0 10px;
 }
 
 #error {

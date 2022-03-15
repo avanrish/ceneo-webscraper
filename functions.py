@@ -8,7 +8,10 @@ def fetch_opinions(id):
     soup = BeautifulSoup(page.text, "lxml")
     title = soup.find("h1", {"class": "product-top__product-info__name"}).text
     amount_of_opinions = int(soup.find("span", {"class": "product-review__qo"}).find("span").text)
+    rating = float(soup.find("span", {"class": "product-review__score"})['content'])
     pages = math.ceil(amount_of_opinions / 10)
+    pros_amount = 0
+    cons_amount = 0
     all_reviews = []
     for i in range(1, pages + 1 if pages <= 50 else 51):
         URL = f"https://www.ceneo.pl/{id}/opinie-{i}"
@@ -33,11 +36,13 @@ def fetch_opinions(id):
             cons_node = div.find('div', {'class': 'review-feature__title--negatives'})
             if pros_node:
                 review_items = pros_node.find_next_siblings('div', {'class': 'review-feature__item'})
+                pros_amount += len(review_items)
                 for i in review_items:
                     obj['pros'].append(i.text)
             if cons_node:
                 review_items = cons_node.find_next_siblings('div', {'class': 'review-feature__item'})
+                cons_amount += len(review_items)
                 for i in review_items:
                     obj['cons'].append(i.text)
             all_reviews.append(obj)
-    return {"title": title, "reviews": all_reviews}
+    return {"title": title, "no_of_reviews": amount_of_opinions, "rating": rating, "pros": pros_amount, "cons": cons_amount, "reviews": all_reviews}

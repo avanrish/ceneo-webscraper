@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Strona Główna</title>
+    <link rel="stylesheet" href="/static/index.css" />
+
+    <script>
+      function download(url) {
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = url.split("/").pop();
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+    </script>
+  </head>
+  <body>
+    <nav>
+      <ul class="menuItems">
+        <li>
+          <a href="{{url_for('home')}}">Strona Główna</a>
+        </li>
+        <li>
+          <a href="{{url_for('extract')}}">Ekstrakcja Opinii</a>
+        </li>
+        <li>
+          <a href="#" class="active">Lista Produktów</a>
+        </li>
+        <li><a href="{{url_for('author')}}">O Autorze</a></li>
+      </ul>
+    </nav>
+    <main>
+      {% for item in prods %}
+      <div class="product">
+        <a href="{{url_for('product', id=item['id'])}}"> {{item["title"]}} </a>
+        <div class="stats">
+          <span>Liczba opinii: {{item["no_of_reviews"]}}</span>
+          <span>Liczba zalet: {{item["pros"]}}</span>
+          <span>Liczba wad: {{item["cons"]}}</span>
+          <span>Średnia ocena: {{item["rating"]}}</span>
+        </div>
+        <span>Pobierz opinie:</span>
+        <div>
+          <button
+            onclick="download(`{{url_for('download', id=item['id'], type='csv')}}`)"
+          >
+            CSV
+          </button>
+          <button
+            onclick="download(`{{url_for('download', id=item['id'], type='xlsx')}}`)"
+          >
+            XLSX
+          </button>
+          <button
+            onclick="download(`{{url_for('download', id=item['id'], type='json')}}`)"
+          >
+            JSON
+          </button>
+        </div>
+      </div>
+      {% endfor %}
+    </main>
+  </body>
+</html>
