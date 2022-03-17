@@ -48,7 +48,15 @@ def products():
 
 @app.route('/product/<id>')
 def product(id):
-    return '<p>Product</p>'
+    try:
+        with open(f'products/{id}.json') as f:
+            with open('products.json') as f2:
+                all_products = json.loads(f2.read())
+        product = next(item for item in all_products if item['id'] == id)
+        url_for('static', filename='index.css')
+        return render_template('product.html', title=product['title'])
+    except:
+        return redirect(url_for('extract'))
 
 @app.route("/download/<id>/<type>")
 def download(id, type):

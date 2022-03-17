@@ -78,7 +78,7 @@ main button:hover {
   margin-bottom: 15px;
 }
 
-.product a {
+.product a, .product p {
   font-size: 20px;
   text-decoration: none;
   color: #8254ff;

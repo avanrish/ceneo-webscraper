@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/static/index.css" />
+    <script>
+      function download(url) {
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = url.split("/").pop();
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+    </script>
+  </head>
+  <body>
+    <nav>
+      <ul class="menuItems">
+        <li>
+          <a href="{{url_for('home')}}">Strona Główna</a>
+        </li>
+        <li>
+          <a href="{{url_for('extract')}}">Ekstrakcja Opinii</a>
+        </li>
+        <li>
+          <a href="{{url_for('products')}}">Lista Produktów</a>
+        </li>
+        <li><a href="{{url_for('author')}}">O Autorze</a></li>
+      </ul>
+    </nav>
+    <main>
+      <div class="product">
+        <p>{{title}}</p>
+        <div class="stats">
+        </div>
+        <span>Pobierz opinie:</span>
+        <div>
+          <button
+            onclick="download(`{{url_for('download', id=1, type='csv')}}`)"
+          >
+            CSV
+          </button>
+          <button
+            onclick="download(`{{url_for('download', id=1, type='xlsx')}}`)"
+          >
+            XLSX
+          </button>
+          <button
+            onclick="download(`{{url_for('download', id=1, type='json')}}`)"
+          >
+            JSON
+          </button>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
