@@ -6,15 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{title}}</title>
     <link rel="stylesheet" href="/static/index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script>
       function download(url) {
-        const a = document.createElement("a");
+        const a = $("a");
         a.href = url;
         a.download = url.split("/").pop();
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
       }
+      $(document).ready(function () {
+        $("#myTable").DataTable();
+      });
     </script>
   </head>
   <body>
@@ -35,8 +44,7 @@
     <main>
       <div class="product">
         <p>{{title}}</p>
-        <div class="stats">
-        </div>
+        <div class="stats"></div>
         <span>Pobierz opinie:</span>
         <div>
           <button
@@ -56,6 +64,45 @@
           </button>
         </div>
       </div>
+      <table id="myTable" class="display">
+        <thead>
+          <tr>
+            {% for header in headers %}
+            <th>{{header}}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in data %}
+          <tr>
+            <td>{{row['id']}}</td>
+            <td>{{row['author']}}</td>
+            <td>{{row['recommendation']}}</td>
+            <td>{{row['rating']}}</td>
+            <td>{{'Tak' if row['confirmed'] == True else 'Nie'}}</td>
+            <td>{{row['opinion_date']}}</td>
+            <td>{{row['buy_date']}}</td>
+            <td>{{row['like']}}</td>
+            <td>{{row['dislike']}}</td>
+            <td>{{row['text']}}</td>
+            <td>
+              <ul>
+                {% for pro in row['pros'] %}
+                <li>{{pro}}</li>
+                {% endfor %}
+              </ul>
+            </td>
+            <td>
+              <ul>
+                {% for con in row['cons'] %}
+                <li>{{con}}</li>
+                {% endfor %}
+              </ul>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </main>
   </body>
 </html>

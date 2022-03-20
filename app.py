@@ -49,12 +49,14 @@ def products():
 @app.route('/product/<id>')
 def product(id):
     try:
-        with open(f'products/{id}.json') as f:
-            with open('products.json') as f2:
-                all_products = json.loads(f2.read())
+        with open('products.json') as f:
+            all_products = json.loads(f.read())
         product = next(item for item in all_products if item['id'] == id)
+        with open(f'products/{id}.json') as f2:
+            data=json.loads(f2.read())
+        headers=['ID', "Autor", "Rekomendacja", "Ocena", "Potwierdzone zakupem", "Data opinii", "Data zakupu", "Przydatna", "Nieprzydatna", "Treść", "Zalety", "Wady"]
         url_for('static', filename='index.css')
-        return render_template('product.html', title=product['title'], id=product["id"])
+        return render_template('product.html', title=product['title'], id=product["id"], data=data, headers=headers)
     except:
         return redirect(url_for('extract'))
 
