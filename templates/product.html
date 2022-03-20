@@ -40,17 +40,17 @@
         <span>Pobierz opinie:</span>
         <div>
           <button
-            onclick="download(`{{url_for('download', id=1, type='csv')}}`)"
+            onclick="download(`{{url_for('download', id=id, type='csv')}}`)"
           >
             CSV
           </button>
           <button
-            onclick="download(`{{url_for('download', id=1, type='xlsx')}}`)"
+            onclick="download(`{{url_for('download', id=id, type='xlsx')}}`)"
           >
             XLSX
           </button>
           <button
-            onclick="download(`{{url_for('download', id=1, type='json')}}`)"
+            onclick="download(`{{url_for('download', id=id, type='json')}}`)"
           >
             JSON
           </button>

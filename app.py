@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request, send_file, url_for, Response
+from flask import Flask, redirect, render_template, request, send_file, url_for
 import pandas as pd
 import json
 
@@ -54,7 +54,7 @@ def product(id):
                 all_products = json.loads(f2.read())
         product = next(item for item in all_products if item['id'] == id)
         url_for('static', filename='index.css')
-        return render_template('product.html', title=product['title'])
+        return render_template('product.html', title=product['title'], id=product["id"])
     except:
         return redirect(url_for('extract'))
 
