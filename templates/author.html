@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>O Autorze</title>
+    <link rel="stylesheet" href="/static/index.css" />
+  </head>
+  <body>
+    <nav>
+      <ul class="menuItems">
+        <li>
+          <a href="{{url_for('home')}}">Strona Główna</a>
+        </li>
+        <li>
+          <a href="{{url_for('extract')}}">Ekstrakcja Opinii</a>
+        </li>
+        <li>
+          <a href="{{url_for('products')}}">Lista Produktów</a>
+        </li>
+        <li><a href="#" class="active">O Autorze</a></li>
+      </ul>
+    </nav>
+    <main>
+      <h2 class="title">Autor</h2>
+      <span>Nazywam się <b>Bartosz Lipiński</b> i jestem autorem tej aplikacji webowej. Obecnie studiuję zaocznie na Uniwersytecie Ekonomicznym w Krakowie, kierunek Informatyka Stosowana. Na co dzień zajmuję się tworzeniem stron internetowych, a w czasie wolnym piszę strony/aplikacje w Reactcie.</span>
+      <span class="center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" width="300" alt='react'/></span>
+    </main>
+  </body>
+</html>

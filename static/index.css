@@ -104,6 +104,11 @@ main > span {
   width:100%;
 }
 
+.center {
+  text-align: center;
+  margin-top:15px;
+}
+
 span ul {
   padding-left:16px;
 }

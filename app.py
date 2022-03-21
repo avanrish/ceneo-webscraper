@@ -98,7 +98,7 @@ def download(id, type):
 
 @app.route('/author')
 def author():
-    return '<p>Author</p>'
+    return render_template('author.html')
 
 @app.route('/*')
 def catch_all():
