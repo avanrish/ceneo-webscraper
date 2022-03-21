@@ -22,5 +22,27 @@
         <li><a href="{{url_for('author')}}">O Autorze</a></li>
       </ul>
     </nav>
+    <main>
+      <h2 class="title">Cel Aplikacji</h2>
+      <span>Celem aplikacji jest umożliwienie pobrania opinii o produkcie z serwisu Ceneo.pl, żeby podjęcie decyzji o potencjalnym zakupie było prostsze.</span>
+      <h2 class="title">Działanie aplikacji</h2>
+      <span>Po wejściu na stronę ektrakcji użytkownik musi wprowadzić identyfikator produktu i rozpocząć proces pobierania opinii. Serwer napisany w języku Python z wykorzystaniem frameworka Flask pobiera zawartość strony produktu z serwisu Ceneo.pl oraz wszystkiich podstron z opiniami i zapisuje je. Następnie serwer przekierowuje użytkownika na stronę produktu, gdzie może w tabeli zobaczyć pobrane opinie i zapisać je w formatach: csv, xlsx, json.</span>
+      <h2 class="title">Zastosowane biblioteki (i framework)</h2>
+      <span>
+        <ul>
+          <li><b>flask</b> - framework do tworzenia aplikacji webowych</li>
+          <li><b>beautifulsoup4</b> - przetwarza kod strony internetowej, żeby można łatwo było z niej wyciągnąć informacje</li>
+          <li><b>lxml</b> - parser do beautifulsoup4</li>
+          <li><b>requests</b> - umożliwia pobranie kodu źrodłowego strony</li>
+          <li><b>pandas</b> - umożliwia łatwą konwersję plików do innych typów</li>
+          <li><b>openpyxl</b> - umożliwia czytanie lub zapisywanie plików xlsx</li>
+          <li><b>matplotlib</b> - tworzy wykresy</li>
+          <li><b>numpy</b> - oferuje funkcje matematyczne</li>
+          <li><b>DataTables</b> - tabele z sortowaniem, filtrowaniem, paginacją</li>
+        </ul>
+      </span>
+      <h2 class="title">Zastosowane podejście</h2>
+      <span>Zastosowałem podejście proceduralne, żeby nie powtarzać zbędnie kodu. Flask odpowiada za routing.</span>
+    </main>
   </body>
 </html>

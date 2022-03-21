@@ -82,7 +82,7 @@ main button:hover {
   margin-bottom: 15px;
 }
 
-.product a, .product p {
+.product a, .product p, .title {
   font-size: 20px;
   text-decoration: none;
   color: #8254ff;
@@ -98,6 +98,14 @@ main button:hover {
 .product div:last-of-type {
   display: flex;
   justify-content: center;
+}
+main > span {
+  max-width: 1000px;
+  width:100%;
+}
+
+span ul {
+  padding-left:16px;
 }
 
 .product button {
