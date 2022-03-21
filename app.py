@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request, send_file, url_for, Response
+from flask import Flask, redirect, render_template, request, send_file, url_for
 import pandas as pd
 import json
 
@@ -48,7 +48,22 @@ def products():
 
 @app.route('/product/<id>')
 def product(id):
-    return '<p>Product</p>'
+    try:
+        with open('products.json') as f:
+            all_products = json.loads(f.read())
+        product = next(item for item in all_products if item['id'] == id)
+        with open(f'products/{id}.json') as f2:
+            data=json.loads(f2.read())
+        headers=['ID', "Autor", "Rekomendacja", "Ocena", "Potwierdzone zakupem", "Data opinii", "Data zakupu", "Przydatna", "Nieprzydatna", "Treść", "Zalety", "Wady"]
+        url_for('static', filename='index.css')
+        return render_template('product.html', title=product['title'], id=product["id"], data=data, headers=headers)
+    except:
+        return redirect(url_for('extract'))
+
+@app.route('/product/<id>/stats')
+def stats(id):
+
+    return '<p>Stats</p>'
 
 @app.route("/download/<id>/<type>")
 def download(id, type):

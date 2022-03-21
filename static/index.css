@@ -1,3 +1,7 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 nav {
   margin: 25px;
   background: #f9f9f9;
@@ -49,7 +53,7 @@ main input {
   padding: 5px;
 }
 
-main button {
+main button, .button {
   border-radius: 0;
   padding: 10px;
   border: 1px solid #8254ff;
@@ -78,7 +82,7 @@ main button:hover {
   margin-bottom: 15px;
 }
 
-.product a {
+.product a, .product p {
   font-size: 20px;
   text-decoration: none;
   color: #8254ff;
@@ -102,6 +106,12 @@ main button:hover {
 
 .product div:last-of-type button:nth-child(2) {
   margin: 0 10px;
+}
+
+.button {
+  color:white !important;
+  max-width: max-content;
+  margin:15px auto;
 }
 
 #error {

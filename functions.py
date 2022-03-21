@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import datetime
 import math
 import requests
 
@@ -25,8 +26,8 @@ def fetch_opinions(id):
             obj['recommendation'] = div.find("span", {"class": "user-post__author-recomendation"}).find("em").text if div.find("span", {"class": "user-post__author-recomendation"}) else ''
             obj['rating'] = div.find("span", {"class": "user-post__score-count"}).text.split('/')[0]
             obj['confirmed'] = True if div.find("div", {"class": "review-pz"}) else False
-            obj['opinion_date'] = div("time")[0]["datetime"]
-            obj['buy_date'] = div("time")[1]["datetime"] if len(div("time")) > 1 else ''
+            obj['opinion_date'] = formatDate(div("time")[0]["datetime"])
+            obj['buy_date'] = formatDate(div("time")[1]["datetime"]) if len(div("time")) > 1 else ''
             obj['like'] = int(div.find("button", {"class": "vote-yes"}).find("span").text)
             obj['dislike'] = int(div.find("button", {"class": "vote-no"}).find("span").text)
             obj['text'] = div.find('div', {'class': 'user-post__text'}).text
@@ -46,3 +47,7 @@ def fetch_opinions(id):
                     obj['cons'].append(i.text)
             all_reviews.append(obj)
     return {"title": title, "no_of_reviews": amount_of_opinions, "rating": rating, "pros": pros_amount, "cons": cons_amount, "reviews": all_reviews}
+
+def formatDate(date):
+    return '.'.join(date.split(' ')[0].split('-')[::-1])
+    

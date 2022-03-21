@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/static/index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script>
+      function download(url) {
+        const a = $("a");
+        a.href = url;
+        a.download = url.split("/").pop();
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+      $(document).ready(function () {
+        $("#myTable").DataTable();
+      });
+    </script>
+  </head>
+  <body>
+    <nav>
+      <ul class="menuItems">
+        <li>
+          <a href="{{url_for('home')}}">Strona Główna</a>
+        </li>
+        <li>
+          <a href="{{url_for('extract')}}">Ekstrakcja Opinii</a>
+        </li>
+        <li>
+          <a href="{{url_for('products')}}">Lista Produktów</a>
+        </li>
+        <li><a href="{{url_for('author')}}">O Autorze</a></li>
+      </ul>
+    </nav>
+    <main>
+      <div class="product">
+        <p>{{title}}</p>
+        <div class="stats"></div>
+        <span>Pobierz opinie:</span>
+        <div>
+          <button
+            onclick="download(`{{url_for('download', id=id, type='csv')}}`)"
+          >
+            CSV
+          </button>
+          <button
+            onclick="download(`{{url_for('download', id=id, type='xlsx')}}`)"
+          >
+            XLSX
+          </button>
+          <button
+            onclick="download(`{{url_for('download', id=id, type='json')}}`)"
+          >
+            JSON
+          </button>
+        </div>
+        <a class="button" href="{{url_for('stats', id=id)}}">Wykresy</a>
+      </div>
+      <table id="myTable" class="display">
+        <thead>
+          <tr>
+            {% for header in headers %}
+            <th>{{header}}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in data %}
+          <tr>
+            <td>{{row['id']}}</td>
+            <td>{{row['author']}}</td>
+            <td>{{row['recommendation']}}</td>
+            <td>{{row['rating']}}</td>
+            <td>{{'Tak' if row['confirmed'] == True else 'Nie'}}</td>
+            <td>{{row['opinion_date']}}</td>
+            <td>{{row['buy_date']}}</td>
+            <td>{{row['like']}}</td>
+            <td>{{row['dislike']}}</td>
+            <td>{{row['text']}}</td>
+            <td>
+              <ul>
+                {% for pro in row['pros'] %}
+                <li>{{pro}}</li>
+                {% endfor %}
+              </ul>
+            </td>
+            <td>
+              <ul>
+                {% for con in row['cons'] %}
+                <li>{{con}}</li>
+                {% endfor %}
+              </ul>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </main>
+  </body>
+</html>
