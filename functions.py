@@ -1,5 +1,8 @@
 from bs4 import BeautifulSoup
-import datetime
+from matplotlib import pyplot as plt
+from io import BytesIO
+import base64
+import numpy as np
 import math
 import requests
 
@@ -51,3 +54,29 @@ def fetch_opinions(id):
 def formatDate(date):
     return '.'.join(date.split(' ')[0].split('-')[::-1])
     
+def pieChart(recs):
+    labels = ['Poleca', 'Nie poleca']
+    data = np.array([recs['good'], recs['bad']])
+    fig = plt.figure(figsize =(10, 7))
+    plt.pie(data, labels = labels, autopct=lambda val: data[ np.abs(data - val/100.*data.sum()).argmin() ])
+    plt.title('Rozkład rekomendacji')
+    tmpfile = BytesIO()
+    fig.savefig(tmpfile, format='png')
+    encoded = base64.b64encode(tmpfile.getvalue()).decode('utf-8')
+    img = '<img src=\'data:image/png;base64,{}\'>'.format(encoded)
+    return img
+
+def barChart(stars):
+    rating = list(stars.keys())
+    values = list(stars.values())
+
+    fig = plt.figure(figsize = (10, 5))
+    plt.bar(rating, values, width = 0.4)
+    plt.xlabel("Ocena (w gwiazdkach)")
+    plt.ylabel("Liczba osób")
+    plt.title("Rozkład ocen")
+    tmpfile = BytesIO()
+    fig.savefig(tmpfile, format='png')
+    encoded = base64.b64encode(tmpfile.getvalue()).decode('utf-8')
+    img = '<img src=\'data:image/png;base64,{}\'>'.format(encoded)
+    return img

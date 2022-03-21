@@ -2,13 +2,13 @@ from flask import Flask, redirect, render_template, request, send_file, url_for
 import pandas as pd
 import json
 
-from functions import fetch_opinions
+from functions import barChart, fetch_opinions, pieChart
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    url_for('static', filename='index.css')
+    
     return render_template('homepage.html')
 
 @app.route('/extract', methods=['GET', 'POST'])
@@ -43,7 +43,7 @@ def extract():
 def products():
     with open('products.json') as f:
         data_array = json.loads(f.read())
-    url_for('static', filename='index.css')
+    
     return render_template('products.html', prods=data_array)
 
 @app.route('/product/<id>')
@@ -55,15 +55,34 @@ def product(id):
         with open(f'products/{id}.json') as f2:
             data=json.loads(f2.read())
         headers=['ID', "Autor", "Rekomendacja", "Ocena", "Potwierdzone zakupem", "Data opinii", "Data zakupu", "Przydatna", "Nieprzydatna", "Treść", "Zalety", "Wady"]
-        url_for('static', filename='index.css')
+        
         return render_template('product.html', title=product['title'], id=product["id"], data=data, headers=headers)
     except:
         return redirect(url_for('extract'))
 
 @app.route('/product/<id>/stats')
 def stats(id):
-
-    return '<p>Stats</p>'
+    try:
+        with open('products.json') as f:
+            all_products = json.loads(f.read())
+        product = next(item for item in all_products if item['id'] == id)
+        with open(f'products/{id}.json') as f2:
+            data=json.loads(f2.read())
+        recs = {'good': 0, 'bad': 0}
+        rating = {'1': 0, '1,5': 0,'2': 0,'2,5': 0,'3': 0,'3,5': 0,'4': 0,'4,5': 0,'5': 0}
+        for review in data:
+            if review['recommendation'] == 'Polecam':
+                recs['good'] += 1
+            else:
+                recs['bad'] += 1
+            rating[review['rating']] += 1
+        
+        pie = pieChart(recs)
+        bar = barChart(rating)
+        return render_template('charts.html', title=product['title'], id=id, pieChart=pie, barChart=bar)
+    except Exception as e:
+        print(e)
+        return '<p>Stats</p>'
 
 @app.route("/download/<id>/<type>")
 def download(id, type):
@@ -83,5 +102,5 @@ def author():
 
 @app.route('/*')
 def catch_all():
-    url_for('static', filename='index.css')
+    
     return render_template('homepage.html')
