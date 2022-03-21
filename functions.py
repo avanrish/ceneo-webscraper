@@ -67,14 +67,20 @@ def pieChart(recs):
     return img
 
 def barChart(stars):
-    rating = list(stars.keys())
-    values = list(stars.values())
+    rating = []
+    values = []
+    for k, v in stars.items():
+        if v > 0:
+            rating.append(k)
+            values.append(v)
 
     fig = plt.figure(figsize = (10, 5))
-    plt.bar(rating, values, width = 0.4)
+    plt.bar(rating, values, width = 0.4 )
     plt.xlabel("Ocena (w gwiazdkach)")
     plt.ylabel("Liczba osób")
     plt.title("Rozkład ocen")
+    for k, v in enumerate(values):
+        plt.text(k, v + 3, str(v), ha='center')
     tmpfile = BytesIO()
     fig.savefig(tmpfile, format='png')
     encoded = base64.b64encode(tmpfile.getvalue()).decode('utf-8')

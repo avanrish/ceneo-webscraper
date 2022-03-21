@@ -69,7 +69,7 @@ def stats(id):
         with open(f'products/{id}.json') as f2:
             data=json.loads(f2.read())
         recs = {'good': 0, 'bad': 0}
-        rating = { '0,5': 0,'1': 0, '1,5': 0,'2': 0,'2,5': 0,'3': 0,'3,5': 0,'4': 0,'4,5': 0,'5': 0}
+        rating = { '0': 0, '0,5': 0,'1': 0, '1,5': 0,'2': 0,'2,5': 0,'3': 0,'3,5': 0,'4': 0,'4,5': 0,'5': 0}
         for review in data:
             if review['recommendation'] == 'Polecam':
                 recs['good'] += 1
