@@ -69,7 +69,7 @@ def stats(id):
         with open(f'products/{id}.json') as f2:
             data=json.loads(f2.read())
         recs = {'good': 0, 'bad': 0}
-        rating = {'1': 0, '1,5': 0,'2': 0,'2,5': 0,'3': 0,'3,5': 0,'4': 0,'4,5': 0,'5': 0}
+        rating = { '0,5': 0,'1': 0, '1,5': 0,'2': 0,'2,5': 0,'3': 0,'3,5': 0,'4': 0,'4,5': 0,'5': 0}
         for review in data:
             if review['recommendation'] == 'Polecam':
                 recs['good'] += 1
@@ -80,9 +80,8 @@ def stats(id):
         pie = pieChart(recs)
         bar = barChart(rating)
         return render_template('charts.html', title=product['title'], id=id, pieChart=pie, barChart=bar)
-    except Exception as e:
-        print(e)
-        return '<p>Stats</p>'
+    except:
+        return redirect(url_for('extract'))
 
 @app.route("/download/<id>/<type>")
 def download(id, type):
