@@ -60,6 +60,11 @@ def product(id):
     except:
         return redirect(url_for('extract'))
 
+@app.route('/product/<id>/stats')
+def stats(id):
+
+    return '<p>Stats</p>'
+
 @app.route("/download/<id>/<type>")
 def download(id, type):
     df = pd.read_json(f'products/{id}.json')
