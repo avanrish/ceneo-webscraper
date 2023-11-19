@@ -2,7 +2,8 @@ import json
 from os import getenv
 from flask import Flask
 from firebase_admin import credentials, initialize_app
-from .routes import init_routes
+from .web_routes import web
+from .api_routes import api
 
 
 def create_app():
@@ -12,5 +13,6 @@ def create_app():
     cred = credentials.Certificate(cert)
     initialize_app(cred)
 
-    init_routes(app)
+    app.register_blueprint(web)
+    app.register_blueprint(api, url_prefix='/api')
     return app
