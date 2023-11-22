@@ -5,6 +5,8 @@ const appData = {
     errorToMessage(error) {
         return {
             'productUrl.empty': 'Please enter a product URL.',
+            'product.notFound': 'Product not found. Please enter a valid product URL.',
+            'product.noReviews': 'Product has no reviews. Please enter another product URL.',
         }[error] || 'Something went wrong. Please try again later.'
     },
     get isLoading() {
