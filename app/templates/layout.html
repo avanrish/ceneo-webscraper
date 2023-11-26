@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
     <title>{% block title %}{% endblock %}</title>
     <meta charset="utf-8">
@@ -16,10 +16,10 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.2/dist/cdn.min.js"></script>
     {% block head %}{% endblock %}
 </head>
-<body>
-<div class="bg-white">
+<body class="bg-white h-full">
+{% if not hide_navigation %}
     {% include "navigation.html" %}
-    {% block content %}{% endblock %}
-</div>
+{% endif %}
+{% block content %}{% endblock %}
 </body>
 </html>
