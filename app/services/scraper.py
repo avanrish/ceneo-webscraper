@@ -23,11 +23,11 @@ class Scraper:
             raise APIException("product.notFound", 400)
         return product_name_tag.text.strip()
 
-    def get_number_of_reviews(self):
-        number_of_reviews_tag = self.soup.find("span", {"class": "product-review__qo"}).find("span")
-        if number_of_reviews_tag is None:
+    def get_amount_of_reviews(self):
+        amount_of_reviews_tag = self.soup.find("span", {"class": "product-review__qo"}).find("span")
+        if amount_of_reviews_tag is None:
             raise APIException("product.noReviews", 400)
-        return int(number_of_reviews_tag.text.strip())
+        return int(amount_of_reviews_tag.text.strip())
 
     def get_average_rating(self):
         average_rating_tag = self.soup.find("span", {"class": "product-review__score"})
@@ -35,8 +35,8 @@ class Scraper:
             raise APIException("product.noReviews", 400)
         return float(average_rating_tag['content'])
 
-    def get_all_reviews(self, number_of_reviews):
-        pages = min(math.ceil(number_of_reviews / 10), 50)  # Ceneo limits pages to 50
+    def get_all_reviews(self, amount_of_reviews):
+        pages = min(math.ceil(amount_of_reviews / 10), 50)  # Ceneo limits pages to 50
         current_page = 1
         all_reviews = []
         while current_page <= pages:

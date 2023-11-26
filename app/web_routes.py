@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 from .services.store import Store
 
 web = Blueprint('web', __name__)
@@ -11,7 +11,9 @@ def home():
 
 @web.route('/products')
 def products():
-    return render_template('products/page.html')
+    page = request.args.get('page', 1, type=int)
+    products, metadata = Store.get_paginated_products(page)
+    return render_template('products/page.html', products=products, metadata=metadata)
 
 
 @web.route('/products/<product_id>')

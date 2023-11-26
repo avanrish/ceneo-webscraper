@@ -1,0 +1,97 @@
+<main class="relative isolate px-6 pt-14 lg:px-8">
+    <div class="px-4 sm:px-6 lg:px-8 max-sm:mt-8">
+        <div class="sm:flex sm:items-center">
+            <div class="sm:flex-auto">
+                <h1 class="text-base font-semibold leading-6 text-gray-900">Products</h1>
+            </div>
+        </div>
+        <div class="mt-8 flow-root">
+            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                    <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-300">
+                            <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col"
+                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                                    Name
+                                </th>
+                                <th scope="col"
+                                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Rating
+                                </th>
+                                <th scope="col"
+                                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Review Count
+                                </th>
+                                <th scope="col"
+                                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pros Count
+                                </th>
+                                <th scope="col"
+                                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Cons Count
+                                </th>
+                                <th scope="col"
+                                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Last scraped
+                                </th>
+                                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                                    <span class="sr-only">Download JSON</span>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 bg-white">
+                            {% for product in products %}
+                                <tr>
+                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                        <a class="underline hover:text-orange-600"
+                                           href="{{ url_for('web.product', product_id=product.id) }}">
+                                            {{ product.product_name }}
+                                        </a>
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ product.average_rating }}
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        {{ product.amount_of_reviews }}
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        {{ product.amount_of_pros }}
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ product.amount_of_cons }}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ product.created_at }}</td>
+                                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                        <a href="#" class="text-orange-600 hover:text-orange-900">Download<span
+                                                class="sr-only">,{{ product.product_name }}</span></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                        <nav class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
+                             aria-label="Pagination">
+                            <div class="hidden sm:block">
+                                <p class="text-sm text-gray-700">
+                                    Showing
+                                    <span class="font-medium">{{ (metadata.current_page - 1) *  metadata.items_per_page + 1 }}</span>
+                                    to
+                                    <span class="font-medium">{{ metadata.items_per_page * metadata.current_page }}</span>
+                                    of
+                                    <span class="font-medium">{{ metadata.total_items }}</span>
+                                    results
+                                </p>
+                            </div>
+                            <div class="flex flex-1 justify-between sm:justify-end"
+                                 x-data="{ currentPage: {{ metadata.current_page }}, totalPages: {{ metadata.total_pages }}, get isPreviousPage() { return this.currentPage > 1 }, get isNextPage() { return this.currentPage < this.totalPages } }">
+                                <a href="{{ url_for('web.products', page=metadata.current_page - 1 if metadata.current_page > 1 else 1) }}"
+                                   class="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0"
+                                   :class="{ 'opacity-70 pointer-events-none': !isPreviousPage }"
+                                >Previous</a>
+                                <a href="{{ url_for('web.products', page=metadata.current_page + 1 if metadata.current_page < metadata.total_pages else total_pages) }}"
+
+                                   class="relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0"
+                                   :class="{ 'opacity-70 pointer-events-none': !isNextPage }">Next</a>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

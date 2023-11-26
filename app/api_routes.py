@@ -13,13 +13,14 @@ def scrape_product():
         raise APIException("productUrl.empty", 400)
     scraper = Scraper(data['productUrl'])
     product_name = scraper.get_product_name()
-    number_of_reviews = scraper.get_number_of_reviews()
+    amount_of_reviews = scraper.get_amount_of_reviews()
     average_rating = scraper.get_average_rating()
-    reviews = scraper.get_all_reviews(number_of_reviews)
-    total_pros = sum([len(review['pros']) for review in reviews])
-    total_cons = sum([len(review['cons']) for review in reviews])
-    product_info = {"product_name": product_name, "number_of_reviews": number_of_reviews,
-                    "average_rating": average_rating, "total_pros": total_pros, "total_cons": total_cons}
+    reviews = scraper.get_all_reviews(amount_of_reviews)
+    amount_of_pros = sum([len(review['pros']) for review in reviews])
+    amount_of_cons = sum([len(review['cons']) for review in reviews])
+    product_info = {"product_name": product_name, "amount_of_reviews": amount_of_reviews,
+                    "average_rating": average_rating, "amount_of_pros": amount_of_pros,
+                    "amount_of_cons": amount_of_cons}
     product_ref = Store.set_product(scraper.product_id, product_info, reviews)
     return jsonify({"product_id": product_ref.id})
 

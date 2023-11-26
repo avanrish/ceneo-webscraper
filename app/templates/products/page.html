@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}Products - Ceneo Webscraper{% endblock %}
+
+{% block head %}
+    <meta name="description"
+          content="Ceneo Webscraper is a tool that allows you to get all the reviews of a product from Ceneo.pl."/>
+{% endblock %}
+
+{% block content %}
+    {% if products|length == 0 %}
+        {% include 'products/no-products.html' %}
+    {% else %}
+        {% include 'products/products-table.html' %}
+    {% endif %}
+{% endblock %}
