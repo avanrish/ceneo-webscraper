@@ -44,17 +44,19 @@ class Scraper:
             soup = BeautifulSoup(page_html, 'html.parser')
             reviews_tree = soup('div', {"class": "js_product-review"})
             for review in reviews_tree:
-                all_reviews.append(self.__extract_review(review))
+                all_reviews.append(self._extract_review(review))
             current_page += 1
         return all_reviews
 
-    def __extract_review(self, review):
-        review_dict = {}
-        review_dict['author'] = review.find("span", {"class": "user-post__author-name"}).text.strip()
-        review_dict['is_recommended'] = review.find("em", {"class": "recommended"}) is not None
-        review_dict['rating'] = float(
-            review.find("span", {"class": "user-post__score-count"}).text.split('/')[0].replace(',', '.'))
-        review_dict['is_confirmed'] = review.find("div", {"class": "review-pz"}) is not None
+    @staticmethod
+    def _extract_review(review):
+        review_dict = {
+            'author': review.find("span", {"class": "user-post__author-name"}).text.strip(),
+            'is_recommended': review.find("em", {"class": "recommended"}) is not None,
+            'rating': float(
+                review.find("span", {"class": "user-post__score-count"}).text.split('/')[0].replace(',', '.')),
+            'is_confirmed': review.find("div", {"class": "review-pz"}) is not None
+        }
         dates = review.find_all("time")
         review_dict['created_at'] = datetime.strptime(dates[0]["datetime"], "%Y-%m-%d %H:%M:%S")
         review_dict['bought_at'] = datetime.strptime(dates[1]["datetime"], "%Y-%m-%d %H:%M:%S") if len(

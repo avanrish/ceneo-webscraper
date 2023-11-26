@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from .lib.api_exception import APIException
 from .services.scraper import Scraper
+from .services.store import Store
 
 api = Blueprint('api', __name__)
 
@@ -17,7 +18,10 @@ def scrape_product():
     reviews = scraper.get_all_reviews(number_of_reviews)
     total_pros = sum([len(review['pros']) for review in reviews])
     total_cons = sum([len(review['cons']) for review in reviews])
-    return jsonify(data)
+    product_info = {"product_name": product_name, "number_of_reviews": number_of_reviews,
+                    "average_rating": average_rating, "total_pros": total_pros, "total_cons": total_cons}
+    product_ref = Store.set_product(scraper.product_id, product_info, reviews)
+    return jsonify({"product_id": product_ref.id})
 
 
 @api.errorhandler(APIException)

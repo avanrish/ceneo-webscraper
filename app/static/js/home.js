@@ -16,9 +16,10 @@ const appData = {
         this.loading = true;
         this.error = '';
         try {
-            await axios.post('/api/products', {
+            const {data} = await axios.post('/api/products', {
                 productUrl: this.productUrl,
             });
+            window.location.href = `/products/${data.product_id}`;
         } catch (e) {
             this.error = this.errorToMessage(e.response.data.message)
         } finally {
