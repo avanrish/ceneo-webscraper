@@ -1,0 +1,5 @@
+{% macro render_navigation(hide_navigation) %}
+    {% if not hide_navigation %}
+        {% include "navigation.html" %}
+    {% endif %}
+{% endmacro %}

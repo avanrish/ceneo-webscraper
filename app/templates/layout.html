@@ -1,3 +1,5 @@
+{% from "macros.html" import render_navigation %}
+
 <!DOCTYPE html>
 <html lang="en" class="h-full">
 <head>
@@ -17,9 +19,7 @@
     {% block head %}{% endblock %}
 </head>
 <body class="bg-white h-full">
-{% if not hide_navigation %}
-    {% include "navigation.html" %}
-{% endif %}
+{{ render_navigation(hide_navigation) }}
 {% block content %}{% endblock %}
 </body>
 </html>
