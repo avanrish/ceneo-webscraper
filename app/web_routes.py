@@ -22,6 +22,6 @@ def product(product_id):
     return render_template('product/page.html')
 
 
-@web.route('/<path:path>')
+@web.route('/<path:path>', methods=['GET'])
 def catch_all(path):
     return render_template('404.html', hide_navigation=True), 404

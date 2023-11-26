@@ -13,6 +13,6 @@ def create_app():
     cred = credentials.Certificate(cert)
     initialize_app(cred)
 
-    app.register_blueprint(web)
     app.register_blueprint(api, url_prefix='/api')
+    app.register_blueprint(web)
     return app
