@@ -26,8 +26,10 @@ class Store:
         result = collection_ref.count().get()
         amount_of_docs = result[0][0].value
         total_pages = math.ceil(amount_of_docs / page_limit)
-        # TODO: if page > total_pages
-        # TODO: if page < 1
+        if page > total_pages:
+            page = total_pages
+        if page < 1:
+            page = 1
         docs = collection_ref.order_by('created_at').limit(page_limit).offset(page_limit * (page - 1)).get()
         converted_docs = []
         for doc in docs:
