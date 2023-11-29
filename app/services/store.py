@@ -18,7 +18,9 @@ class Store:
         product = product_ref.get()
         if not product.exists:
             return None
-        return product.to_dict()
+        product_dict = product.to_dict()
+        product_dict['id'] = product.id
+        return product_dict
 
     @staticmethod
     def get_paginated_products(page):

@@ -25,6 +25,17 @@ def scrape_product():
     return jsonify({"product_id": product_ref.id})
 
 
+@api.route('/products/<product_id>/download', methods=['GET'])
+def download_product_json(product_id):
+    product = Store.get_product(product_id)
+    if product is None:
+        raise APIException("product.not_found", 404)
+    response = jsonify(product)
+    response.headers['Content-Disposition'] = f'attachment; filename={product_id}.json'
+    response.mimetype = 'application/json'
+    return response
+
+
 @api.errorhandler(APIException)
 def handle_custom_exception(error):
     response = jsonify(message=error.message)
