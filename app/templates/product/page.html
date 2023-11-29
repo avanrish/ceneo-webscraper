@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ product.product_name }} - Ceneo Webscraper{% endblock %}
+
+{% block head %}
+    <meta name="description"
+          content="Ceneo Webscraper is a tool that allows you to get all the reviews of a product from Ceneo.pl."/>
+{% endblock %}
+
+{% block content %}
+    <main class="relative isolate px-6 pt-14 lg:px-8">
+        {% include "product/product_info.html" %}
+        {% include "product/product_reviews.html" %}
+    </main>
+    <script>const reviews = {{ product.reviews | tojson }}</script>
+    <script src="{{ url_for('static', filename='js/product.js') }}"></script>
+{% endblock %}

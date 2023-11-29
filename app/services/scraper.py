@@ -23,6 +23,10 @@ class Scraper:
             raise APIException("product.notFound", 400)
         return product_name_tag.text.strip()
 
+    def get_product_description(self):
+        product_info_tag = self.soup.find('div', {'class': 'product-top__product-info__tags'})
+        return product_info_tag.text.strip() if product_info_tag else None
+
     def get_amount_of_reviews(self):
         amount_of_reviews_tag = self.soup.find("span", {"class": "product-review__qo"}).find("span")
         if amount_of_reviews_tag is None:

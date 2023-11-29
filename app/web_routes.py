@@ -20,8 +20,8 @@ def products():
 def product(product_id):
     product = Store.get_product(product_id)
     if product is None:
-        return render_template('product/not-found.html'), 404
-    return render_template('product/page.html')
+        return render_template('404.html'), 404
+    return render_template('product/page.html', product=product)
 
 
 @web.route('/<path:path>', methods=['GET'])

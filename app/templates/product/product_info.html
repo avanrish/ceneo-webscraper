@@ -1,0 +1,30 @@
+<div class="py-16 sm:py-20">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl lg:max-w-none">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{{ product.product_name }}</h2>
+                {% if product.product_description %}
+                    <p class="mt-4 text-lg leading-8 text-gray-600">{{ product.product_description }}</p>
+                {% endif %}
+            </div>
+            <dl class="mt-16 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-4">
+                <div class="flex flex-col bg-gray-400/5 p-8">
+                    <dt class="text-sm font-semibold leading-6 text-gray-600">Amount of reviews</dt>
+                    <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900">{{ product.amount_of_reviews }}</dd>
+                </div>
+                <div class="flex flex-col bg-gray-400/5 p-8">
+                    <dt class="text-sm font-semibold leading-6 text-gray-600">Average rating</dt>
+                    <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900">{{ product.average_rating }}</dd>
+                </div>
+                <div class="flex flex-col bg-gray-400/5 p-8">
+                    <dt class="text-sm font-semibold leading-6 text-gray-600">Amount of pros</dt>
+                    <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900">{{ product.amount_of_pros }}</dd>
+                </div>
+                <div class="flex flex-col bg-gray-400/5 p-8">
+                    <dt class="text-sm font-semibold leading-6 text-gray-600">Amount of cons</dt>
+                    <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900">{{ product.amount_of_cons }}</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+</div>
