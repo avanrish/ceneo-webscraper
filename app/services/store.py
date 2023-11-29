@@ -1,7 +1,7 @@
 import math
 from firebase_admin import firestore
 
-page_limit = 2
+limit_per_page = 10
 
 
 class Store:
@@ -27,18 +27,18 @@ class Store:
         collection_ref = firestore.client().collection('products')
         result = collection_ref.count().get()
         amount_of_docs = result[0][0].value
-        total_pages = math.ceil(amount_of_docs / page_limit)
+        total_pages = math.ceil(amount_of_docs / limit_per_page)
         if page > total_pages:
             page = total_pages
         if page < 1:
             page = 1
-        docs = collection_ref.order_by('created_at').limit(page_limit).offset(page_limit * (page - 1)).get()
+        docs = collection_ref.order_by('created_at').limit(limit_per_page).offset(limit_per_page * (page - 1)).get()
         converted_docs = []
         for doc in docs:
             doc_dict = doc.to_dict()
             doc_dict['id'] = doc.id
             doc_dict['created_at'] = doc_dict['created_at'].strftime('%d/%m/%Y %H:%M')
             converted_docs.append(doc_dict)
-        metadata = {"items_per_page": page_limit, "total_items": amount_of_docs, "current_page": page,
+        metadata = {"items_per_page": limit_per_page, "total_items": amount_of_docs, "current_page": page,
                     "total_pages": total_pages}
         return converted_docs, metadata
