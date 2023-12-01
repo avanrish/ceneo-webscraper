@@ -1,5 +1,6 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, Response
 from .lib.api_exception import APIException
+from .lib.utils import Utils
 from .services.scraper import Scraper
 from .services.store import Store
 
@@ -28,13 +29,30 @@ def scrape_product():
 
 
 @api.route('/products/<product_id>/download', methods=['GET'])
-def download_product_json(product_id):
+def download_product(product_id):
     product = Store.get_product(product_id)
     if product is None:
         raise APIException("product.not_found", 404)
     response = jsonify(product)
     response.headers['Content-Disposition'] = f'attachment; filename={product_id}.json'
-    response.mimetype = 'application/json'
+    return response
+
+
+@api.route('/products/<product_id>/reviews/download', methods=['GET'])
+def download_reviews(product_id):
+    product = Store.get_product(product_id)
+    if product is None:
+        raise APIException("product.not_found", 404)
+    format = request.args.get('format', "json")
+    if format == "csv":
+        csv = Utils.dict_to_csv(product['reviews'])
+        response = Response(csv, mimetype='text/csv')
+    elif format == "xlsx":
+        xlsx = Utils.dict_to_xlsx(product['reviews'])
+        response = Response(xlsx, mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    else:
+        response = jsonify(product['reviews'])
+    response.headers['Content-Disposition'] = f'attachment; filename={product_id}.{format}'
     return response
 
 

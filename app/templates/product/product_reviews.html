@@ -2,6 +2,15 @@
     <div class="sm:flex sm:items-center">
         <div class="sm:flex-auto">
             <h1 class="text-base font-semibold leading-6 text-gray-900">Reviews</h1>
+            <p class="my-2 text-sm text-gray-700">A downloadable list of all reviews.</p>
+            <span class="isolate inline-flex rounded-md shadow-sm">
+                  <a href="{{ url_for('api.download_reviews', product_id=product.id) }}?format=json"
+                     class="relative inline-flex items-center rounded-l-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10">JSON</a>
+                  <a href="{{ url_for('api.download_reviews', product_id=product.id) }}?format=csv"
+                     class="relative -ml-px inline-flex items-center bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10">CSV</a>
+                  <a href="{{ url_for('api.download_reviews', product_id=product.id) }}?format=xlsx"
+                     class="relative -ml-px inline-flex items-center rounded-r-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10">XLSX</a>
+            </span>
         </div>
     </div>
     <div class="mt-8 flow-root" x-data="appData">
